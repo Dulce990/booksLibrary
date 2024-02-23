@@ -7,39 +7,88 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
-        /* Estilos personalizados */
         body {
-            background-color: #f8f9fa; /* Color de fondo para todo el cuerpo */
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
         }
+
+        /* Encabezado */
         .ui-header {
-            background-color: #5c7cfa !important; /* Color de fondo del encabezado */
-            color: white !important; /* Color del texto del encabezado */
+            background-color: #5c7cfa;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
         }
-        .ui-footer {
-            background-color: #343a40 !important; /* Color de fondo del pie de página */
-            color: white !important; /* Color del texto del pie de página */
-        }
+
+        /* Contenido */
         .ui-content {
-            background-color: white !important; /* Color de fondo del contenido */
-            color: #343a40 !important; /* Color del texto del contenido */
+            padding: 20px;
         }
-        .ui-collapsible-content {
-            border: 2px solid #5c7cfa; /* Borde del contenido plegable */
-            border-radius: 5px; /* Borde redondeado */
+
+        /* Lista de libros */
+        .book-list {
+            margin-bottom: 30px;
+            padding: 0;
+            list-style: none;
         }
-        .ui-body-inherit {
-            background-color: #f8f9fa !important; /* Color de fondo para los botones */
-            border-color: #5c7cfa !important; /* Color del borde de los botones */
-            color: #5c7cfa !important; /* Color del texto de los botones */
+
+        .book-item {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .ui-btn:hover {
-            background-color: #5c7cfa !important; /* Color de fondo al pasar el ratón sobre los botones */
-            color: white !important; /* Color del texto al pasar el ratón sobre los botones */
+
+        .book-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
         }
-        .ui-btn:active {
-            background-color: #343a40 !important; /* Color de fondo al hacer clic en los botones */
-            color: white !important; /* Color del texto al hacer clic en los botones */
+
+        .book-details {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .book-details li {
+            margin-bottom: 5px;
+        }
+
+        /* Botones de acciones */
+        .action-buttons {
+            text-align: right;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 8px 15px;
+            background-color: #5c7cfa;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons a:hover {
+            background-color: #3c5a9a;
+        }
+
+        /* Pie de página */
+        .ui-footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
         }
     </style>
 </head>
@@ -47,76 +96,81 @@
 
 <!-- Página de Inicio -->
 <div data-role="page" id="home">
-    <div data-role="header">
-        <h1>Libros 📚</h1>
+
+    <div data-role="header" class="ui-header">
+        <h1>Libros <i class="fas fa-book"></i></h1>
     </div>
 
     <div role="main" class="ui-content">
-        <div data-role="collapsibleset" data-filter="true" data-inset="true" id="collapsiblesetForFilter" data-input="#searchForCollapsibleSet">
+        <ul class="book-list">
             <% books.forEach(book => { %>
-                <div data-role="collapsible">
-                    <h3><%= book.title %></h3>
-                    <ul data-role="listview" data-inset="false">
-                        <li><strong>Codigo</strong> <%= book.code %></li>
-                        <li><strong>Titulo:</strong> <%= book.title %></li>
+                <li class="book-item">
+                    <h2 class="book-title"><i class="fas fa-book-open"></i> <%= book.title %></h2>
+                    <ul class="book-details">
+                        <li><strong>Código:</strong> <%= book.code %></li>
                         <li><strong>Autor:</strong> <%= book.author %></li>
                         <li><strong>Descripción:</strong> <%= book.description %></li>
-                        <li><strong>Estatus:</strong> <%= book.status %>
-                        <!-- Agrega más detalles del libro aquí -->
+                        <li><strong>Estatus:</strong> <%= book.status %></li>
                     </ul>
-                    <!-- Botones de editar y eliminar -->
-                    <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-                        <a href="/book/<%= book.code %>" class="ui-btn ui-btn-b">Editar</a> <!-- Modificado -->
-                        <a href="/book/d/<%= book.code %>" class="ui-btn ui-btn-b">Eliminar</a> <!-- Modificado -->
+                    <div class="action-buttons">
+                        <a href="/book/<%= book.code %>"><i class="fas fa-edit"></i> Editar</a>
+                        <a href="/book/d/<%= book.code %>"><i class="fas fa-trash-alt"></i> Eliminar</a>
                     </div>
-                </div>
+                </li>
             <% }) %>
+        </ul>
+        <div class="add-book-button">
+            <a href="#formulario" data-role="button" data-icon="plus" data-iconpos="left" class="ui-btn ui-btn-b ui-corner-all ui-shadow">Agregar Libro</a>
         </div>
-        <!-- Botón para agregar más libros --><br><br>
-        <a href="#formulario" data-role="button" class="ui-btn ui-btn-b ui-corner-all ui-shadow">Agregar Libro</a>
     </div>
 
-    <div data-role="footer" data-position="fixed">
+    <div data-role="footer" class="ui-footer">
         <h4>Libros - © 2024 Desarrollado por Esperanza</h4>
     </div>
 </div>
 
+
 <!-- Página del Formulario para Agregar Nuevo Libro -->
 <div data-role="page" id="formulario">
-    <div data-role="header">
+
+    <div data-role="header" data-theme="b">
         <h1>Agregar Nuevo Libro</h1>
     </div>
 
     <div role="main" class="ui-content">
+        <img src="/descarga.jpg" alt="Imagen de ejemplo" style="max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 20px;">
+
         <form action="/book/" method="POST" id="addBookForm">
 
             <label for="code">Codigo:</label>
-            <input type="text" name="code" required>
+            <input type="text" name="code" required class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset" style="margin-bottom: 10px;">
 
             <label for="title">Título:</label>
-            <input type="text" name="title" required>
+            <input type="text" name="title" required class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset" style="margin-bottom: 10px;">
 
             <label for="author">Autor:</label>
-            <input type="text" name="author" required>
+            <input type="text" name="author" required class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset" style="margin-bottom: 10px;">
 
             <label for="description">Descripción:</label>
-            <textarea name="description" required></textarea>
+            <textarea name="description" required class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset" style="margin-bottom: 10px;"></textarea>
 
-            <label for="status">Disponible</label>
-            <select name="status" id="flip-2" data-role="slider">
+            <label for="status">Disponible:</label>
+            <select name="status" id="flip-2" data-role="slider" class="ui-slider-switch">
                 <option value="0">No</option>
                 <option value="1">Sí</option>
             </select>
 
-            <button type="submit">Guardar</button>
-        </form>
+            <button type="submit" class="ui-btn ui-btn-b ui-btn-raised ui-btn-inline ui-corner-all">Guardar</button>
+        </form><br>
+
         <a href="#home" data-role="button" class="ui-btn ui-btn-b ui-corner-all ui-shadow">Volver</a>
     </div>
 
-    <div data-role="footer">
-        <h1>Libros - © 2024 Desarrollado por Esperanza</h1>
+    <div data-role="footer" data-position="fixed" data-theme="b">
+        <h4>Libros - © 2024 Desarrollado por Esperanza</h4>
     </div>
 </div>
+
 
 </body>
 </html>
