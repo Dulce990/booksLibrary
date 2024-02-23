@@ -66,8 +66,8 @@
                     </ul>
                     <!-- Botones de editar y eliminar -->
                     <div data-role="controlgroup" data-mini="true" data-type="horizontal">
-                        <a href="/book/<%= book.code %>" class="ui-btn ui-btn-b">Editar</a>
-                        <a href="/book/d/<%= book.code %>" class="ui-btn ui-btn-b">Eliminar</a>
+                        <a href="/book/<%= book.code %>" class="ui-btn ui-btn-b">Editar</a> <!-- Modificado -->
+                        <a href="/book/delete/<%= book.code %>" class="ui-btn ui-btn-b">Eliminar</a> <!-- Modificado -->
                     </div>
                 </div>
             <% }) %>
@@ -81,7 +81,6 @@
     </div>
 </div>
 
-
 <!-- Página del Formulario para Agregar Nuevo Libro -->
 <div data-role="page" id="formulario">
     <div data-role="header">
@@ -92,7 +91,7 @@
         <form action="/book/" method="POST" id="addBookForm">
 
             <label for="code">Codigo:</label>
-            <input type="text" name="title" required>
+            <input type="text" name="code" required>
 
             <label for="title">Título:</label>
             <input type="text" name="title" required>
@@ -104,13 +103,14 @@
             <textarea name="description" required></textarea>
 
             <label for="status">Disponible</label>
-                <select name="status" id="flip-2" data-role="slider">
-                    <option value="0"></option>
-                    <option value="1"></option>
-                </select>
+            <select name="status" id="flip-2" data-role="slider">
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+            </select>
 
             <button type="submit">Guardar</button>
         </form>
+        <a href="#home" data-role="button" class="ui-btn ui-btn-b ui-corner-all ui-shadow">Volver</a>
     </div>
 
     <div data-role="footer">
