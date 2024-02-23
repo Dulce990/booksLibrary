@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Sitio de Libros</title>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <style>
+        /* Estilos personalizados */
+        body {
+            background-color: #f8f9fa; /* Color de fondo para todo el cuerpo */
+        }
+        .ui-header {
+            background-color: #5c7cfa !important; /* Color de fondo del encabezado */
+            color: white !important; /* Color del texto del encabezado */
+        }
+        .ui-footer {
+            background-color: #343a40 !important; /* Color de fondo del pie de página */
+            color: white !important; /* Color del texto del pie de página */
+        }
+        .ui-content {
+            background-color: white !important; /* Color de fondo del contenido */
+            color: #343a40 !important; /* Color del texto del contenido */
+        }
+        .ui-collapsible-content {
+            border: 2px solid #5c7cfa; /* Borde del contenido plegable */
+            border-radius: 5px; /* Borde redondeado */
+        }
+        .ui-body-inherit {
+            background-color: #f8f9fa !important; /* Color de fondo para los botones */
+            border-color: #5c7cfa !important; /* Color del borde de los botones */
+            color: #5c7cfa !important; /* Color del texto de los botones */
+        }
+        .ui-btn:hover {
+            background-color: #5c7cfa !important; /* Color de fondo al pasar el ratón sobre los botones */
+            color: white !important; /* Color del texto al pasar el ratón sobre los botones */
+        }
+        .ui-btn:active {
+            background-color: #343a40 !important; /* Color de fondo al hacer clic en los botones */
+            color: white !important; /* Color del texto al hacer clic en los botones */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Página del Formulario para Agregar Nuevo Libro -->
+<div data-role="page" id="formulario">
+    <div data-role="header">
+        <h1>Agregar Nuevo Libro</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+        <form action="/book/<%= recipes.code %>" method="POST" id="updateRecipeForm">
+            <!-- Campos del formulario con valores predefinidos -->
+            <label for="code">Código:</label>
+            <input type="text" name="code" value="<%= recipes.code %>">
+
+            <label for="title">Título:</label>
+            <input type="text" name="title" value="<%= recipes.title %>">
+
+            <label for="author">Autor:</label>
+            <input type="text" name="author" value="<%= recipes.author %>">
+
+            <label for="description">Descripción:</label>
+            <textarea name="description" required><%= recipes.description %></textarea>
+
+            <label for="status">Disponible</label>
+            <select name="status" id="flip-2" data-role="slider">
+                <option value="0" <%= recipes.status == 0 ? "selected" : "" %>>No</option>
+                <option value="1" <%= recipes.status == 1 ? "selected" : "" %>>Sí</option>
+            </select>
+
+            <button type="submit">Actualizar</button>
+        </form>
+    </div>
+
+    <div data-role="footer">
+        <h1>Libros - © 2024 Desarrollado por Esperanza</h1>
+    </div>
+</div>
+
+</body>
+</html>
